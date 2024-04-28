@@ -1,8 +1,11 @@
 import React from 'react'
+import "./Header.css"
 
 function Header() {
   return (
-    <div>Header</div>
+    <div>
+      <h3>The Royal Bank of Moringa</h3>
+    </div>
   )
 }
 
