@@ -67,7 +67,7 @@ function Form() {
             onChange={handleInput}
           />
         </div>
-        <input type="submit" value="Add Transactions" />
+        <input type="submit" value="Add Transaction" id="submit"/>
       </form>
       <div>
         <table>
@@ -80,6 +80,18 @@ function Form() {
             </tr>
           </thead>
           <tbody>
+          <tr key="initial">
+                <td>2022-05-16</td>
+                <td>Movies</td>
+                <td>Entertainment</td>
+                <td>25</td>
+              </tr>
+              <tr key="second">
+                <td>2022-05-16</td>
+                <td>Movies</td>
+                <td>Entertainment</td>
+                <td>25</td>
+              </tr>
             {transaction.map(({ date, description, category, amount }, index) => (
               <tr key={index}>
                 <td>{date}</td>
