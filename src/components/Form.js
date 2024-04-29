@@ -31,8 +31,30 @@ function Form() {
     });
   }
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredTransactions = searchTerm
+  ? transaction.filter((transaction) =>
+      transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
+    ) 
+    
+  : transaction;
+
   return (
     <div>
+      <div className="search-container">
+        <form className="search-box">
+          <div className="search-input-box">
+            <input
+              type="text"
+              placeholder="Search your Recent Transactions"
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <i className="fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+        </form>
+      </div>
       <form onSubmit={handleSubmit}>
         <div id="form">
           <label>Date:</label>
@@ -67,7 +89,7 @@ function Form() {
             onChange={handleInput}
           />
         </div>
-        <input type="submit" value="Add Transaction" id="submit"/>
+        <input type="submit" value="Add Transaction" id="submit" />
       </form>
       <div>
         <table>
@@ -80,19 +102,19 @@ function Form() {
             </tr>
           </thead>
           <tbody>
-          <tr key="initial">
-                <td>2022-05-16</td>
-                <td>Movies</td>
-                <td>Entertainment</td>
-                <td>25</td>
-              </tr>
-              <tr key="second">
-                <td>2022-05-16</td>
-                <td>Movies</td>
-                <td>Entertainment</td>
-                <td>25</td>
-              </tr>
-            {transaction.map(({ date, description, category, amount }, index) => (
+            <tr key="initial">
+              <td>2022-05-16</td>
+              <td>Movies</td>
+              <td>Entertainment</td>
+              <td>25</td>
+            </tr>
+            <tr key="second">
+              <td>2022-05-16</td>
+              <td>Movies</td>
+              <td>Entertainment</td>
+              <td>25</td>
+            </tr>
+            {filteredTransactions.map(({ date, description, category, amount }, index) => (
               <tr key={index}>
                 <td>{date}</td>
                 <td>{description}</td>
@@ -108,3 +130,4 @@ function Form() {
 }
 
 export default Form;
+

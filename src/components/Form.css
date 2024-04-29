@@ -15,18 +15,27 @@ td {
 }
 
 th, #submit{
-    background-color: #f0f0f0
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+#submit{
+    margin-top: 20px;
+    background-color: #d9d9d9;
 }
 
 input{
     border-radius: 5px;
-    height: 20px;
+    height: 25px;
     border: 1px solid;
+    margin-right: 40px;
+    width: 200px;
+    margin-block-start: 10px;
 
 }
 
 div{
     font-family: sans-serif;
+    font-weight: 200;
 }
 
 form {
@@ -35,4 +44,5 @@ form {
     margin-left: 20px;
     margin-right: 35px;
     border-radius: 5px;
+    text-align: unset;
 }
