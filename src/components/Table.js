@@ -1,5 +1,6 @@
 import React from 'react'
 import "./Table.css"
+import Form from './Form'
 
 function Table() {
     return (
@@ -7,7 +8,6 @@ function Table() {
         <table>
             <thead>
                 <tr>
-                    <th></th>
                     <th>Date</th>
                     <th>Description</th>
                     <th>Category</th>
@@ -15,13 +15,14 @@ function Table() {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td>date</td>
-                    <td>description</td>
-                    <td>category</td>
-                    <td>amount</td>
+                {Form.map(({date, description, category, amount}) => (
+                    <tr>
+                    <td>{date}</td>
+                    <td>{description}</td>
+                    <td>{category}</td>
+                    <td>{amount}</td>
                 </tr>
+                ))}
             </tbody>
         </table>
     </div>
