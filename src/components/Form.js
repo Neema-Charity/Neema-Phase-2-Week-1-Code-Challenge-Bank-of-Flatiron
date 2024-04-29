@@ -1,41 +1,45 @@
-import React, { useState } from 'react'
-import "./Form.css"
+import React, { useState } from 'react';
+import "./Form.css";
 
 function Form() {
-
-  const [transaction, setTransaction] = useState({
+  const [transaction, setTransaction] = useState([]);
+  const [formData, setFormData] = useState({
     date: "",
     description: "",
     category: "",
     amount: ""
-
-  })
+  });
 
   function handleSubmit(e) {
-    e.preventDefault()
-    console.log(transaction)
+    e.preventDefault();
+    setTransaction([...transaction, formData]);
+    setFormData({
+      date: "",
+      description: "",
+      category: "",
+      amount: ""
+    });
   }
 
   function handleInput(e) {
-    const key = e.target.id
-    const value = e.target.value
+    const key = e.target.id;
+    const value = e.target.value;
 
-    setTransaction({
-      ...transaction,
+    setFormData({
+      ...formData,
       [key]: value
-    })
+    });
   }
-  
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div id="form">
-
           <label>Date:</label>
           <input
             type="date"
             id="date"
-            value={transaction.date}
+            value={formData.date}
             onChange={handleInput}
           />
 
@@ -43,7 +47,7 @@ function Form() {
             type="text"
             id="description"
             placeholder="Description"
-            value={transaction.description}
+            value={formData.description}
             onChange={handleInput}
           />
 
@@ -51,7 +55,7 @@ function Form() {
             type="text"
             id="category"
             placeholder="Category"
-            value={transaction.category}
+            value={formData.category}
             onChange={handleInput}
           />
 
@@ -59,16 +63,36 @@ function Form() {
             type="text"
             id="amount"
             placeholder='Amount'
-            value={transaction.amount}
+            value={formData.amount}
             onChange={handleInput}
           />
-
         </div>
-        <input type="submit" value="Add Transactions"></input>
-
+        <input type="submit" value="Add Transactions" />
       </form>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {transaction.map(({ date, description, category, amount }, index) => (
+              <tr key={index}>
+                <td>{date}</td>
+                <td>{description}</td>
+                <td>{category}</td>
+                <td>{amount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Form
+export default Form;
