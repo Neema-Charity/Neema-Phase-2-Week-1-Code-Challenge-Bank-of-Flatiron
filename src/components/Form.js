@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Form.css";
 
 function Form() {
-  const [transaction, setTransaction] = useState([]);
+  const storedTransactions = localStorage.getItem("transactions");
+  const initialTransactions = storedTransactions ? JSON.parse(storedTransactions) : [];
+  
+  const [transaction, setTransaction] = useState(initialTransactions);
+
   const [formData, setFormData] = useState({
     date: "",
     description: "",
@@ -32,12 +36,14 @@ function Form() {
   }
 
   const [searchTerm, setSearchTerm] = useState("");
-  const filteredTransactions = searchTerm
-  ? transaction.filter((transaction) =>
-      transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
-    ) 
-    
-  : transaction;
+
+  const filteredTransactions = transaction.filter((transaction) =>
+    transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  useEffect(() => {
+    localStorage.setItem("transactions", JSON.stringify(transaction));
+  }, [transaction]);
 
   return (
     <div>
@@ -102,18 +108,7 @@ function Form() {
             </tr>
           </thead>
           <tbody>
-            <tr key="initial">
-              <td>2022-05-16</td>
-              <td>Movies</td>
-              <td>Entertainment</td>
-              <td>25</td>
-            </tr>
-            <tr key="second">
-              <td>2022-05-16</td>
-              <td>Movies</td>
-              <td>Entertainment</td>
-              <td>25</td>
-            </tr>
+          
             {filteredTransactions.map(({ date, description, category, amount }, index) => (
               <tr key={index}>
                 <td>{date}</td>
@@ -130,4 +125,6 @@ function Form() {
 }
 
 export default Form;
+
+
 
