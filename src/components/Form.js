@@ -61,7 +61,7 @@ function Form() {
           </div>
         </form>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="form">
         <div id="form">
           <label>Date:</label>
           <input

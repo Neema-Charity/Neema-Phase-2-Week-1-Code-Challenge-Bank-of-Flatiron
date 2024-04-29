@@ -46,3 +46,17 @@ form {
     border-radius: 5px;
     text-align: unset;
 }
+
+.search-box {
+    margin-bottom: 20px;
+    border: none;
+}
+
+.search-input {
+    width: 1350px;
+    margin-right: 50px;
+}
+
+form#form {
+    border: 1px solid;
+}
