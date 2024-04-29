@@ -48,7 +48,7 @@ form {
 }
 
 .search-box {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     border: none;
 }
 
@@ -59,4 +59,9 @@ form {
 
 form#form {
     border: 1px solid;
+}
+
+div.sorter{
+    margin-top: 0px;
+    margin-bottom: 20px;
 }

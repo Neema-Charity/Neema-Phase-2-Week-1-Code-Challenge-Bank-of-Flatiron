@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import "./Form.css";
 
 function Form() {
-  // Function to retrieve transactions from localStorage
-  const getStoredTransactions = () => {
-    const storedTransactions = localStorage.getItem("transactions");
-    return storedTransactions ? JSON.parse(storedTransactions) : [];
-  };
-
-  const [transactions, setTransactions] = useState(getStoredTransactions());
+  // Get transactions from local storage or initialize an empty array
+  const storedTransactions = localStorage.getItem("transactions");
+  const initialTransactions = storedTransactions ? JSON.parse(storedTransactions) : [];
+  
+  // State variables for transactions, form data, search term, sort criteria, and sort order
+  const [transactions, setTransactions] = useState(initialTransactions);
   const [formData, setFormData] = useState({
     date: "",
     description: "",
@@ -16,6 +15,8 @@ function Form() {
     amount: ""
   });
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortCriteria, setSortCriteria] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc"); // "asc" or "desc"
 
   // Function to handle form submission
   const handleSubmit = (e) => {
@@ -45,10 +46,27 @@ function Form() {
     );
   };
 
+  // Function to sort transactions based on selected criteria
+  const sortTransactions = () => {
+    if (sortCriteria) {
+      const sorted = [...transactions].sort((a, b) => {
+        if (sortOrder === "asc") {
+          return a[sortCriteria].localeCompare(b[sortCriteria]);
+        } else {
+          return b[sortCriteria].localeCompare(a[sortCriteria]);
+        }
+      });
+      return sorted;
+    }
+    return transactions; // Return unsorted if no criteria selected
+  };
+
+  // Effect to update local storage whenever transactions state changes
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
   }, [transactions]);
 
+  // JSX to render the form and transactions table
   return (
     <div>
       <div className="search-container">
@@ -64,7 +82,15 @@ function Form() {
             <i className="fa-solid fa-magnifying-glass search-icon"></i>
           </div>
         </form>
+        <div class="sorter">
+          Sort by:
+          <button onClick={() => {setSortCriteria("category"); setSortOrder("asc")}}>Category (A-Z)</button>
+          <button onClick={() => {setSortCriteria("category"); setSortOrder("desc")}}>Category (Z-A)</button>
+          <button onClick={() => {setSortCriteria("description"); setSortOrder("asc")}}>Description (A-Z)</button>
+          <button onClick={() => {setSortCriteria("description"); setSortOrder("desc")}}>Description (Z-A)</button>
+        </div>
       </div>
+      
       <form onSubmit={handleSubmit} id="form">
         <div id="form">
           <label>Date:</label>
@@ -112,7 +138,7 @@ function Form() {
             </tr>
           </thead>
           <tbody>
-            {filterTransactions().map(({ date, description, category, amount }, index) => (
+            {sortTransactions().map(({ date, description, category, amount }, index) => (
               <tr key={index}>
                 <td>{date}</td>
                 <td>{description}</td>
@@ -128,6 +154,8 @@ function Form() {
 }
 
 export default Form;
+
+
 
 
 
