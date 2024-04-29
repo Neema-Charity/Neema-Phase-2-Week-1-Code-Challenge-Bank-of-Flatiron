@@ -2,48 +2,52 @@ import React, { useState, useEffect } from 'react';
 import "./Form.css";
 
 function Form() {
-  const storedTransactions = localStorage.getItem("transactions");
-  const initialTransactions = storedTransactions ? JSON.parse(storedTransactions) : [];
-  
-  const [transaction, setTransaction] = useState(initialTransactions);
+  // Function to retrieve transactions from localStorage
+  const getStoredTransactions = () => {
+    const storedTransactions = localStorage.getItem("transactions");
+    return storedTransactions ? JSON.parse(storedTransactions) : [];
+  };
 
+  const [transactions, setTransactions] = useState(getStoredTransactions());
   const [formData, setFormData] = useState({
     date: "",
     description: "",
     category: "",
     amount: ""
   });
+  const [searchTerm, setSearchTerm] = useState("");
 
-  function handleSubmit(e) {
+  // Function to handle form submission
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setTransaction([...transaction, formData]);
+    setTransactions([...transactions, formData]);
     setFormData({
       date: "",
       description: "",
       category: "",
       amount: ""
     });
-  }
+  };
 
-  function handleInput(e) {
-    const key = e.target.id;
-    const value = e.target.value;
-
+  // Function to handle input changes
+  const handleInput = (e) => {
+    const { id, value } = e.target;
     setFormData({
       ...formData,
-      [key]: value
+      [id]: value
     });
-  }
+  };
 
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredTransactions = transaction.filter((transaction) =>
-    transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Function to filter transactions based on search term
+  const filterTransactions = () => {
+    return transactions.filter((transaction) =>
+      transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
 
   useEffect(() => {
-    localStorage.setItem("transactions", JSON.stringify(transaction));
-  }, [transaction]);
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  }, [transactions]);
 
   return (
     <div>
@@ -108,8 +112,7 @@ function Form() {
             </tr>
           </thead>
           <tbody>
-          
-            {filteredTransactions.map(({ date, description, category, amount }, index) => (
+            {filterTransactions().map(({ date, description, category, amount }, index) => (
               <tr key={index}>
                 <td>{date}</td>
                 <td>{description}</td>
@@ -125,6 +128,8 @@ function Form() {
 }
 
 export default Form;
+
+
 
 
 
