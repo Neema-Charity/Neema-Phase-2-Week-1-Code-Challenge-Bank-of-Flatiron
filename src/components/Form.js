@@ -46,20 +46,22 @@ function Form() {
     );
   };
 
-  // Function to sort transactions based on selected criteria
-  const sortTransactions = () => {
-    if (sortCriteria) {
-      const sorted = [...transactions].sort((a, b) => {
-        if (sortOrder === "asc") {
-          return a[sortCriteria].localeCompare(b[sortCriteria]);
-        } else {
-          return b[sortCriteria].localeCompare(a[sortCriteria]);
-        }
-      });
-      return sorted;
-    }
-    return transactions; // Return unsorted if no criteria selected
-  };
+ // Function to sort transactions based on selected criteria
+const sortTransactions = () => {
+  const filtered = filterTransactions(); // Filter transactions based on search term
+  if (sortCriteria) {
+    const sorted = [...filtered].sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a[sortCriteria].localeCompare(b[sortCriteria]);
+      } else {
+        return b[sortCriteria].localeCompare(a[sortCriteria]);
+      }
+    });
+    return sorted;
+  }
+  return filtered; // Return filtered transactions if no criteria selected
+};
+
 
   // Effect to update local storage whenever transactions state changes
   useEffect(() => {
