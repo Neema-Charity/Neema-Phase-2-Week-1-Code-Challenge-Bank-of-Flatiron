@@ -79,7 +79,7 @@ function Form() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <i className="fa-solid fa-magnifying-glass search-icon"></i>
+            <i className="search-icon"></i>
           </div>
         </form>
         <div class="sorter">
@@ -127,6 +127,7 @@ function Form() {
         </div>
         <input type="submit" value="Add Transaction" id="submit" />
       </form>
+
       <div>
         <table>
           <thead>
